@@ -1,8 +1,6 @@
 module TimelinesService
   class Creator
-    # include TimelinesCommon
-
-    def initialize(event, context)
+    def initialize(event)
       @event = event
     end
 
@@ -24,11 +22,11 @@ module TimelinesService
       [item[:TargetDate], timeline]
     end
 
-    def put_items(items)
-      items.each do |item|
-        dynamo_table.put_item({ item: item })
-      end
-    end
+    # def put_items(items)
+    #   items.each do |item|
+    #     dynamo_table.put_item({ item: item })
+    #   end
+    # end
 
     def comment
       body = JSON.parse(@event['body'])

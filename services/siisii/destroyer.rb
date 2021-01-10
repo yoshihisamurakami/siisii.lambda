@@ -1,8 +1,6 @@
 module TimelinesService
   class Destroyer
-    # include TimelinesCommon
-
-    def initialize(event, context)
+    def initialize(event)
       @event = event
     end
 

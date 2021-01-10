@@ -1,13 +1,13 @@
 
 module TimelinesService
   class Index
-    # include TimelinesCommon
-
-    def initialize(event, context)
+    def initialize(event)
       @event = event
     end
 
     def get_index
+      validate_params!
+
       params = {
         table_name: dynamo_tablename,
         key_condition_expression: "#targetdate = :targetdate",
@@ -29,6 +29,11 @@ module TimelinesService
         }
       end
       [target_date, data]
+    end
+
+    def validate_params!
+      raise 'パラメータ queryStringParameters がありません!' unless @event.has_key?('queryStringParameters')
+      raise 'パラメータ target_dateがありません!' unless @event['queryStringParameters'].has_key?('target_date')
     end
 
     def target_date
