@@ -5,7 +5,7 @@ module TimelinesService
     end
 
     def destroy
-      target_date = Time.now.strftime('%Y-%m-%d')
+      target_date = get_target_date
       timestamp = get_id
       params = {
         key: {
@@ -14,6 +14,11 @@ module TimelinesService
         }
       }
       dynamo_table.delete_item(params)
+    end
+
+    def get_target_date
+      body = @event['pathParameters']
+      Time.at(body['id'].to_f).strftime('%Y-%m-%d')
     end
 
     def get_id
