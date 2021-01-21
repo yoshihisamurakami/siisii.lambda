@@ -56,7 +56,8 @@ module TimelinesService
     def get_registered_at
       body = JSON.parse(@event['body'])
       time = body['registered_at']
-      Time.parse(time).to_i
+      second = Time.at(body['id']).strftime('%S')
+      Time.parse(time + ':' + second).to_i
     end
   end
 end
